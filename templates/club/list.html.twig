@@ -1,0 +1,59 @@
+
+
+<h1 style="background-color:powderblue;">-les titres des formations en majuscule</h1>
+
+{% for i in formations %}
+
+
+<p>{{i.Titre|upper}}</p>
+<br>
+        
+    {% endfor %}
+
+    <br><br>
+<h1 style="background-color:powderblue;">-le nombre des formations.</h1>
+    <p> le nombre de formations:  {{ formations|length }}</p>
+    <br><br>
+<h1 style="background-color:powderblue;">-les titres des formations théoriques.</h1>
+    {% for i in formations %}
+{%  if 'theorique' in i.Description %}
+
+<p>{{i.Titre}}</p>
+<br>
+     {% endif %}   
+    {% endfor %}
+<br><br>
+
+<h1 style="background-color:powderblue;">-le titre de la formation ayant le plus grand nombre de participants.</h1>
+{% set maxValue = 0 %}
+{% for i in formations %}
+
+{% set maxValue = max(i.nb_participants, maxValue) %}
+ {%  if i.nb_participants == maxValue %}
+    <p>{{i.Titre}}</p>
+        {% endif %} 
+    {% endfor %}
+<br><br>
+    <h1 style="background-color:powderblue;"> -une condition dans le cas où le tableau n’est pas défini et/ou vide.</h1>
+    {%  if formations|length !=0 %}
+    <p>n'est pas vide </p>
+
+     {% endif %} 
+
+<br><br>
+<h1 style="background-color:powderblue;">-En cliquant sur le bouton « participer », l’utilisateur sera redirigé vers une nouvelle vue «
+detail.html.twig » affichant le nom de la formation sélectionnée.</h1>
+     {% for i in formations %}
+
+
+ {%  if i.nb_participants == 0 %}
+    <p>{{i.Titre}}</p> 
+
+    <form action="{{path('detail2',{'name':i.ref }) }}">
+                <button>Participer</button></form>
+    
+        {% endif %} 
+    {% endfor %}
+
+
+   
